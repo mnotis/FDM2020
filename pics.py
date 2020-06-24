@@ -19,7 +19,25 @@ def visualize_test(psi_real, psi_im, axis_num):
     plt.imshow(psi2)
     plt.colorbar()
     plt.show()
-    
+   
+# takes a two dimensional density array and centers it on the highest point
+def rho_roll(rho):
+    rho_len = rho.shape[0]
+    # finding the maximum value's index
+    max_ind = np.where(rho == np.amax(rho))
+    x_max = max_ind[0][0]
+    y_max = max_ind[1][0]
+    #z_max = max_ind[2][0]
+    signed_x_dist_to_cent = int(rho_len / 2) - x_max
+    signed_y_dist_to_cent = int(rho_len / 2) - y_max
+    #signed_z_dist_to_cent = int(rho_len / 2) - z_max
+    #moving the core to the center of the cube
+    rho_n = np.roll(rho, signed_x_dist_to_cent, axis=0)
+    rho_n2 = np.roll(rho_n, signed_y_dist_to_cent, axis=1)
+    #rho_n3 = np.roll(rho_n2, signed_z_dist_to_cent, axis=2)
+    rho = rho_n2
+    return rho
+
 #takes in two 3D arrays and produces picture of the result
 #saves picture in file in subdirectory
 #params: two 3d arrays, the axis to sum across, 
@@ -30,17 +48,19 @@ def visualize(psi_real, psi_im, axis_num, fig_name, dir_name):
     psi_real2 = np.sum(psi_real**2, axis = axis_num)
     psi_im2 = np.sum(psi_im**2, axis = axis_num)
     psi2 = np.log(psi_real2 + psi_im2)
+    psi2 = rho_roll(psi2)
     plt.set_cmap('inferno')
     plt.imshow(psi2)
     
     plt.colorbar()
     plt.savefig(dir_name + "/" + fig_name)
     plt.clf()
-
-    #params: path to folder with hdf5 files, desired subfolder name, the simulation size, e.g. 40 (not counting initial pic)
+    
+#params: path to folder with hdf5 files, desired subfolder name, the simulation size, e.g. 40 (not counting initial pic)
 
 def make_pics(path_to_folder, dir_name, n_sim): 
     dir = path_to_folder + '/' + dir_name
+    n_sim = int(n_sim)
     if not os.path.exists(dir):
         os.mkdir(dir)
     for i in range(n_sim + 1):
@@ -49,4 +69,11 @@ def make_pics(path_to_folder, dir_name, n_sim):
         psi_im = np.array(hf['psiIm'])
         visualize(psi_real, psi_im, 2, 'pic' + str(i).zfill(4), dir)
         
-make_pics(sys.argv[1], sys.argv[2], int(sys.argv[3]))
+path_to_folder = sys.argv[1]
+dir_name = sys.argv[2]
+n_sim = sys.argv[3]
+print(path_to_folder)
+print(dir_name)
+print(n_sim)
+make_pics(path_to_folder, dir_name, n_sim)
+print("Task completed successfully!")
