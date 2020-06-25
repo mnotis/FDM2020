@@ -173,7 +173,7 @@ def file_to_pic_curve_fit(path, file, dist_lim, f):
     plt.xlim(10**(-2), 10**(1.4))
     textstr = 'rc = ' + "%.2f" % rc
     plt.legend(['Analytic Profile, rc = ' + "%.2f" % rc,'Simulation'])
-    plt.savefig(path + '/pic' + file + '.png')
+    plt.savefig('pic' + file + f + '.png')
     
     
 file_to_pic_curve_fit(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
