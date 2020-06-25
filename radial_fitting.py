@@ -176,6 +176,26 @@ def file_to_pic_curve_fit(path, file, dist_lim, f):
     plt.legend(['Analytic Profile, rc = ' + "%.2f" % rc,'Simulation'])
     plt.savefig('pic' + file + f + '.png')
     
-    
-file_to_pic_curve_fit(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+# writes radial h5 files for all files in folder:
+def radial_h5_folder(path, n_snap):
+    dir = path + '/rad_files'
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+    for i in range(0, int(n_snap) + 1):
+        result = file_to_rad_avg_den(path + '/snap' + str(i).zfill(4) + '.h5')
+        dist = np.sort(result[0])
+        dens = (-1)*(np.sort(result[1]*(-1)))
+        dist_lim = 0.65
+        params = (dist, dens, dist_lim)
+        x0 = np.asarray(2)
+        res = minimize(X2_fun, x0, args = params)
+        rc = res.x[0]
+        # saving as file
+        hf = h5py.File(dir + '/' + 'radial' + str(i).zfill(4) + '.h5', 'w')
+        hf.create_dataset('distances', data=dist)
+        hf.create_dataset('densities', data=dens)
+        hf.create_dataset('rc', data=rc)
+        hf.close()
+        
+radial_h5_folder(sys.argv[1], sys.argv[2])
 print('Task completed successfully!')
