@@ -76,7 +76,7 @@ def radial_density(rho):
 # and the densities as values and outputs two np arrays, one with the distances 
 # and one with the ---average--- density at that radial distance.
 
-def rad_avg_den(dict):
+def rad_avg_den(dict, scale_factor):
     dict_len = len(dict)
     dist = np.fromiter(dict.keys(), dtype=float)
     avgs = np.zeros(dict_len)
@@ -84,7 +84,7 @@ def rad_avg_den(dict):
         dens = np.array(dict[dist[x]])
         avg = np.mean(dens)
         avgs[x] = avg
-    return dist * (20/128), avgs
+    return dist * scale_factor, avgs
 
 # testing
 #res = rad_avg_den(dict)
@@ -95,8 +95,9 @@ def rad_avg_den(dict):
 def file_to_rad_avg_den(path):
     rho = file_to_density(path)
     rho = rho_roll(rho)
+    scale_factor = 20/ rho.shape[0]
     rad_den = radial_density(rho)
-    return rad_avg_den(rad_den)
+    return rad_avg_den(rad_den, scale_factor)
 
 #file to picture
 def file_to_pic(path_to_dir, fig_num, f_str):
