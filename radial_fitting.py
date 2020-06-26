@@ -197,7 +197,7 @@ def radial_h5_folder(path, n_snap):
         hf.create_dataset('densities', data=dens)
         hf.create_dataset('rc', data=rc)
         hf.close()
-path = '/scratch/network/mnotis/src/f2L20T4n400r256'
+path = '/scratch/network/mnotis/src/f4L20T4n400r256'
 #file_to_pic_curve_fit(path, 'snap0400.h5', 0.65, 'Inf')       
 radial_h5_folder(path, 400)
 print('Task completed successfully!')
