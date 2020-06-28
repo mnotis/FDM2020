@@ -179,11 +179,12 @@ def file_to_pic_curve_fit(path, file, dist_lim, f):
 # writes radial h5 files for all files in folder:
 def radial_h5_folder(path, n_snap):
     dir = '/home/mnotis/src/FDM2020' + '/rad_files'
-    n_snap = n_snap /10
+    n_snap = n_snap / 10
     if not os.path.exists(dir):
         os.mkdir(dir)
     for i in range(0, int(n_snap) + 1):
         result = file_to_rad_avg_den(path + '/snap' + str(i*10).zfill(4) + '.h5')
+        print(i*10)
         dist = np.sort(result[0])
         dens = (-1)*(np.sort(result[1]*(-1)))
         dist_lim = 0.65
@@ -197,7 +198,7 @@ def radial_h5_folder(path, n_snap):
         hf.create_dataset('densities', data=dens)
         hf.create_dataset('rc', data=rc)
         hf.close()
-path = '/scratch/network/mnotis/src/f4L20T4n400r256'
+path = '/scratch/network/mnotis/src/output/f1.5L20T4n400r256'
 #file_to_pic_curve_fit(path, 'snap0400.h5', 0.65, 'Inf')       
-radial_h5_folder(path, 400)
+radial_h5_folder(path, 170)
 print('Task completed successfully!')
