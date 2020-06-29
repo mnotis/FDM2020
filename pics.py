@@ -64,10 +64,10 @@ def make_pics(path_to_folder, dir_name, n_sim):
     if not os.path.exists(dir):
         os.mkdir(dir)
     for i in range(n_sim + 1):
-        hf = h5py.File(path_to_folder + "/snap" + str(i).zfill(4) +".h5", 'r')
+        hf = h5py.File(path_to_folder + "/snap" + str(i*10).zfill(4) +".h5", 'r')
         psi_real = np.array(hf['psiRe'])
         psi_im = np.array(hf['psiIm'])
-        visualize(psi_real, psi_im, 2, 'pic' + str(i).zfill(4), dir)
+        visualize(psi_real, psi_im, 2, 'pic' + str(i*10).zfill(4), dir)
         
 path_to_folder = sys.argv[1]
 dir_name = sys.argv[2]
