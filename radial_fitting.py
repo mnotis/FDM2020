@@ -178,13 +178,13 @@ def file_to_pic_curve_fit(path, file, dist_lim, f):
     
 # writes radial h5 files for all files in folder:
 def radial_h5_folder(path, n_snap):
-    dir = '/home/mnotis/FDM2020' + '/rad_files/f2L20T4n400r256'
+    dir = '/home/mnotis/FDM2020' + '/rad_files/f1.75L20T4n40r256'
     n_snap = n_snap / 10
     if not os.path.exists(dir):
         os.mkdir(dir)
-    for i in range(40, int(n_snap) + 1):
-        result = file_to_rad_avg_den(path + '/snap' + str(i*10).zfill(4) + '.h5')
-        print(i*10)
+    for i in range(0, int(n_snap) + 1):
+        result = file_to_rad_avg_den(path + '/snap' + str(i).zfill(4) + '.h5')
+        print(i)
         dist = np.sort(result[0])
         dens = (-1)*(np.sort(result[1]*(-1)))
         dist_lim = 0.65
@@ -193,12 +193,12 @@ def radial_h5_folder(path, n_snap):
         res = minimize(X2_fun, x0, args = params)
         rc = res.x[0]
         # saving as file
-        hf = h5py.File(dir + '/radial' + str(i*10).zfill(4) + '.h5', 'w')
+        hf = h5py.File(dir + '/radial' + str(i).zfill(4) + '.h5', 'w')
         hf.create_dataset('distances', data=dist)
         hf.create_dataset('densities', data=dens)
         hf.create_dataset('rc', data=rc)
         hf.close()
-path = '/tigress/mnotis/f2L20T4n400r256'
+path = '/tigress/mnotis/f1.75L20T4n40r256'
 #file_to_pic_curve_fit(path, 'snap0400.h5', 0.65, 'Inf')       
 radial_h5_folder(path, 400)
 print('Task completed successfully!')
