@@ -178,8 +178,8 @@ def file_to_pic_curve_fit(path, file, dist_lim, f):
     
 # writes radial h5 files for all files in folder:
 def radial_h5_folder(path, n_snap):
-    dir = '/mnt/c/Users/Noah Notis/Dropbox/USRP2020_Noah/src/FDM2020' + '/rad_files/f2L20T4n400r64'
-    n_snap = n_snap
+    dir = '/home/mnotis/FDM2020' + '/rad_files/f1.25L20T4n40r256'
+    n_snap = n_snap / 10
     if not os.path.exists(dir):
         os.mkdir(dir)
     for i in range(400, int(n_snap)+1):
@@ -198,7 +198,7 @@ def radial_h5_folder(path, n_snap):
         hf.create_dataset('densities', data=dens)
         hf.create_dataset('rc', data=rc)
         hf.close()
-path = '/mnt/c/Users/Noah Notis/Dropbox/USRP2020_Noah/src/output/f2L20T4n400r64'
+path = '/tigress/mnotis/f1.25L20T4n40r256'
 #file_to_pic_curve_fit(path, 'snap0400.h5', 0.65, 'Inf')       
 radial_h5_folder(path, 400)
 print('Task completed successfully!')
