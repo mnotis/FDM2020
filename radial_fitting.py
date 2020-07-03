@@ -182,7 +182,7 @@ def radial_h5_folder(path, n_snap):
     n_snap = n_snap / 10
     if not os.path.exists(dir):
         os.mkdir(dir)
-    for i in range(0, int(n_snap) + 1):
+    for i in range(400, int(n_snap)+1):
         result = file_to_rad_avg_den(path + '/snap' + str(i).zfill(4) + '.h5')
         print(i)
         dist = np.sort(result[0])
