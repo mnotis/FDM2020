@@ -59,19 +59,19 @@ def visualize(psi_real, psi_im, axis_num, fig_name, dir_name):
 #params: path to folder with hdf5 files, desired subfolder name, the simulation size, e.g. 40 (not counting initial pic)
 
 def make_pics(path_to_folder, dir_name, n_sim): 
-    dir = path_to_folder + '/' + dir_name
+    dir = dir_name
     n_sim = int(n_sim)
     if not os.path.exists(dir):
         os.mkdir(dir)
-    for i in range(n_sim + 1):
+    for i in range(0, n_sim + 1):
         hf = h5py.File(path_to_folder + "/snap" + str(i*10).zfill(4) +".h5", 'r')
         psi_real = np.array(hf['psiRe'])
         psi_im = np.array(hf['psiIm'])
         visualize(psi_real, psi_im, 2, 'pic' + str(i*10).zfill(4), dir)
         
-path_to_folder = sys.argv[1]
-dir_name = sys.argv[2]
-n_sim = sys.argv[3]
+path_to_folder = '/tigress/mnotis/f1.125L20T4n40r256'
+dir_name = 'pics/f1.125L20T4n40r256'
+n_sim = 40
 print(path_to_folder)
 print(dir_name)
 print(n_sim)
