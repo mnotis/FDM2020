@@ -69,9 +69,9 @@ def make_pics(path_to_folder, dir_name, n_sim):
         psi_im = np.array(hf['psiIm'])
         visualize(psi_real, psi_im, 2, 'pic' + str(i).zfill(4), dir)
         
-path_to_folder = '/tigress/mnotis/f1.125L20T4n40r512'
-dir_name = 'pics/f1.125L20T4n40r512'
-n_sim = 23
+path_to_folder = '/tigress/mnotis/f1.5L20T4n40r512'
+dir_name = 'pics/f1.5L20T4n40r512'
+n_sim = 38
 print(path_to_folder)
 print(dir_name)
 print(n_sim)
